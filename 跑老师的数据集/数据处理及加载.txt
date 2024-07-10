@@ -1,0 +1,25 @@
+
+from datasets import Dataset, DatasetDict
+
+# 遍历列表中的每个字典，并更新 'label' 键的值
+for item in processed_data:
+    if item['label'] == 'fake':
+        item['label'] = 0
+    elif item['label'] == 'legitimate':
+        item['label'] = 1
+
+# 数据拆分
+test_data = processed_data[:5]
+train_data =processed_data[5:10]
+validation_data =processed_data[10:15]
+
+# 创建一个空的 DatasetDict
+dataset = DatasetDict()
+
+dataset['train'] = Dataset.from_list(train_data)
+dataset['test'] = Dataset.from_list(test_data)
+dataset['validation'] = Dataset.from_list(validation_data)
+
+#加载数据
+from openicl import DatasetReader
+data=DatasetReader(dataset, input_columns='text', output_column='label')
