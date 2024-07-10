@@ -1,5 +1,0 @@
-from datasets import load_dataset
-
-ds = load_dataset("SetFit/sst5")
-
-dataset.save_to_disk('C:/Users/zhujingtang/Desktop/SetFit___sst5')
