@@ -1,0 +1,40 @@
+data_path = {'sst2': ["gpt3mix/sst2", None],
+             'snli': ['snli', None],
+             'mnli': ['LysandreJik/glue-mnli-train', None],
+             "qnli": ["glue", "qnli"],
+             "sst5": ["SetFit/sst5", None],
+             "ag_news": ["ag_news", None],
+             "trec": ["trec", None],
+             "commonsense_qa": ["commonsense_qa", None]
+            }
+
+input_columns={'sst2': ["text"],
+             'snli': ['premise', 'hypothesis'],
+             'mnli': ['premise', 'hypothesis'],
+             "qnli": ["sentence", "question"],
+             "sst5": ["text"],
+             "ag_news": ["text"],
+             "trec": ["text"],
+             "commonsense_qa": ['question', 'A', 'B', 'C', 'D', 'E']
+            }
+
+output_column={'sst2': 'label',
+             'snli': 'label',
+             'mnli': 'label',
+             "qnli": 'label',
+             "sst5": 'label',
+             "ag_news": 'label',
+             "trec": 'coarse_label',
+             "commonsense_qa": "answerKey"
+            }
+
+test_split={
+    'sst2': 'test',
+    'snli': 'test',
+    "sst5": 'test',
+    "ag_news": 'test',
+    "trec": 'test',
+    'mnli': 'validation', 
+    "qnli": 'validation',
+    "commonsense_qa": 'test'
+}
