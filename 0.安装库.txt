@@ -1,2 +1,0 @@
-pip install --upgrade pip -i https://repo.huaweicloud.com/repository/pypi/simple
-pip install openicl -i https://repo.huaweicloud.com/repository/pypi/simple
