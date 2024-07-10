@@ -1,0 +1,55 @@
+from datasets import load_dataset
+from openicl import DatasetReader
+
+# 任务
+task_name='sst2'
+path,name=data_path[task_name]
+dataset = load_dataset(path=path,name=name)
+data=DatasetReader(dataset, input_columns=input_columns[task_name], output_column=output_column[task_name])
+
+# 小数据集
+dataset['test'] = dataset['test'].select(list(range(100)))
+dataset['validation'] = dataset['validation'].select(list(range(100)))
+dataset['train'] = dataset['train'].select(list(range(100)))
+
+#读取本地数据集
+from datasets import Dataset
+from openicl import DatasetReader
+from datasets import DatasetDict
+
+# 指定你的训练集和测试集文件的路径
+train_file_path = 'glue/qnli/0.0.0/bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c/glue-train.arrow'
+test_file_path = 'glue/qnli/0.0.0/bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c/glue-test.arrow'
+validation_file_path='glue/qnli/0.0.0/bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c/glue-validation.arrow'
+
+# 加载训练集
+train_dataset = Dataset.from_file(train_file_path)
+
+# 加载测试集
+test_dataset = Dataset.from_file(test_file_path)
+
+#加载验证集
+validation_dataset=Dataset.from_file(validation_file_path)
+
+# 创建一个DatasetDict，其中包含训练集和测试集
+dataset = {'train': train_dataset, 'test': test_dataset,'validation': validation_dataset}
+dataset = DatasetDict(dataset)
+#开始处理
+task_name='mnli'
+data=DatasetReader(dataset, input_columns=input_columns[task_name], output_column=output_column[task_name])
+# 小数据集
+dataset['test'] = dataset['test'].select(list(range(50)))
+dataset['train'] = dataset['train'].select(list(range(50)))
+dataset['validation'] = dataset['validation'].select(list(range(50)))
+
+#特殊例子
+# Preprocess for commonsense_qa
+def pre_process(example):
+    for i in range(5):
+        example[chr(ord('A') + i)] = example['choices']['text'][i]
+    return example
+if task_name=='commonsense_qa':
+    dataset=dataset.map(pre_process).remove_columns(['question_concept', 'id', 'choices'])
+
+data=DatasetReader(dataset, input_columns=input_columns[task_name], output_column=output_column[task_name])
+
